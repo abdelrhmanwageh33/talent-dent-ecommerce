@@ -123,6 +123,8 @@
   }
   body {
     @apply bg-background text-foreground;
+      font-family: var(--font-poppins);
+
   }
   html {
     @apply font-sans;
