@@ -12,7 +12,7 @@ export default function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="relative flex items-center h-[70px] px-4 md:px-10 gap-4">
+    <nav className="relative flex items-center h-[90px] px-4 md:px-10 gap-4">
 
       {/* Menu + Logo */}
       <div className="flex items-center gap-2 shrink-0">
@@ -34,7 +34,7 @@ export default function NavBar() {
       </div>
 
       {/* Search */}
-      <div className="flex-1 max-w-[400px]">
+      <div className="flex-1 max-w-[600px]">
         <NavSearch />
       </div>
 
