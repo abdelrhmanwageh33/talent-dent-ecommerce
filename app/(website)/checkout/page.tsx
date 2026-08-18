@@ -1,1 +1,10 @@
-export default function Page() { return null; }
+import React from 'react'
+import OrderForm from './_components/OrderForm'
+
+export default function page() {
+  return (
+    <>
+    <OrderForm/>
+    </>
+  )
+}

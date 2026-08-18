@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Product } from "@/lib/ProductType";
 import Link from "next/link";
+import AddToCartButton from "@/app/shared/AddToCartButton";
 
 type ProductCardProps = {
   product: Product;
@@ -70,12 +71,8 @@ export default function ProductCard({ product }: ProductCardProps) {
         </div>
 
         {/* Add to cart */}
-        <button
-          type="button"
-          className="mt-2 w-full rounded-md bg-cyan-600 py-2 text-sm font-medium text-white transition-colors hover:bg-cyan-700"
-        >
-          Add to Cart
-        </button>
+              <AddToCartButton productId={product._id} />
+
       </div>
     </div>
  </Link>

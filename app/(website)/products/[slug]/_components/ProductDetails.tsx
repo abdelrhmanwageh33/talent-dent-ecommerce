@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Minus, Plus, Heart, Truck, RotateCcw, ShieldCheck } from "lucide-react";
 import { useState } from "react";
 import { Product } from "@/lib/ProductType";
+import AddToCartButton from "@/app/shared/AddToCartButton";
 
 interface ProductDetailsProps {
   product: Product;
@@ -165,13 +166,7 @@ export default function ProductDetails({
 
           {/* Actions */}
           <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-            <button
-              type="button"
-              disabled={!product.stock}
-              className="h-12 flex-1 rounded-md bg-[#047484] px-6 font-medium text-white transition hover:bg-[#036471] disabled:cursor-not-allowed disabled:opacity-50"
-            >
-              Add to Cart
-            </button>
+         <AddToCartButton productId={product._id} />
 
             <button
               type="button"

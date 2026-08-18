@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 
 import { getUserOrder } from "@/services/orderService";
-import { getGuestId } from "@/lib/guestId";
+import { useParams } from "next/navigation";
 
 interface OrderProduct {
   _id: string;
@@ -49,30 +49,34 @@ interface Order {
 }
 
 export default function OrderSuccessPage() {
+    const params = useParams<{ id: string }>();
+
+  const orderId = params.id;
+
   const [order, setOrder] = useState<Order | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
-  async function getOrder() {
-    try {
-      setLoading(true);
-
-      const res = await getUserOrder(getGuestId());
-
-      console.log("ORDER RESPONSE:", res);
-
-      setOrder(res.order);
-    } catch (error) {
-      console.error("Failed to get order:", error);
-      setError(true);
-    } finally {
-      setLoading(false);
-    }
-  }
-
   useEffect(() => {
-    getOrder();
-  }, []);
+    async function fetchOrder() {
+      try {
+        setLoading(true);
+
+        const res = await getUserOrder(orderId);
+
+        setOrder(res.order);
+      } catch (error) {
+        console.error("Failed to get order:", error);
+        setError(true);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    if (orderId) {
+      fetchOrder();
+    }
+  }, [orderId]);
 
   // Loading
   if (loading) {

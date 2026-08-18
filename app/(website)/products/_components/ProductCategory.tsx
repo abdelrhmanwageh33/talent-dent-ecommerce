@@ -19,7 +19,8 @@ export default function ProductCategory({
           href="/products"
           className="flex items-center gap-2 text-sm text-[#5f6b73] transition hover:text-[#047484]"
         >
-          <Checkbox className="h-3 w-3 rounded-[3px]" />
+          
+        
           <span>All Categories</span>
         </Link>
 
@@ -30,10 +31,7 @@ export default function ProductCategory({
             href={`/products?category=${category.slug}`}
             className="flex items-center gap-2 text-sm text-[#5f6b73] transition hover:text-[#047484]"
           >
-            <Checkbox
-              id={category._id}
-              className="h-3 w-3 rounded-[3px]"
-            />
+          
 
             <span className="capitalize">
               {category.name}

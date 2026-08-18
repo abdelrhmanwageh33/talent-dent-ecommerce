@@ -41,7 +41,9 @@ export default async function Page({
         </div>
       </div>
 
-      <ProductPagination pagePagination={page} />
+      {
+        category?"":<ProductPagination pagePagination={page} />
+      }
  
     </section>
   );

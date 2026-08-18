@@ -4,6 +4,8 @@ import "./globals.css";
 
 import NavBar from "./shared/NavBar/NavBar";
 import ThemeProvider from "../provider/ThemeProvider";
+import ReduxProvider from "../provider/ReduxProvider";
+          import { Toaster } from "@/components/ui/toast"
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -33,8 +35,14 @@ export default function RootLayout({
     >
       <body className="min-h-full max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 flex flex-col bg-white dark:bg-[#06111F]">
         <ThemeProvider>
-          <NavBar />
+          <ReduxProvider>
+ <NavBar />
           {children}
+        <Toaster />
+
+          </ReduxProvider>
+
+         
         </ThemeProvider>
       </body>
     </html>

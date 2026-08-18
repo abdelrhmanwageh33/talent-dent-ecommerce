@@ -13,7 +13,7 @@ export async function getProducts(
   }
 
   const res = await fetch(
-    `${process.env.PRODUCT_API_URL}/api/products?${params.toString()}`
+    `${process.env.NEXT_PUBLIC_PRODUCT_API_URL}/api/products?${params.toString()}`
   );
 
   if (!res.ok) {
@@ -24,7 +24,7 @@ export async function getProducts(
 }
 export async function getAllCategories() {
   const res = await fetch(
-    `${process.env.PRODUCT_API_URL}/api/categories`,
+    `${process.env.NEXT_PUBLIC_PRODUCT_API_URL}/api/categories`,
 
     {
       cache: "force-cache",
@@ -40,7 +40,7 @@ export async function getAllCategories() {
 }
 
 export async function getSpecificProduct(slugProduct: string) {
-  const res = await fetch(`${process.env.PRODUCT_API_URL}/api/products/${slugProduct}`,
+  const res = await fetch(`${process.env.NEXT_PUBLIC_PRODUCT_API_URL}/api/products/${slugProduct}`,
     {
       cache: "force-cache"
     }
