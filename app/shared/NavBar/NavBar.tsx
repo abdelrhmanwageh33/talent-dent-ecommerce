@@ -12,7 +12,7 @@ export default function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="relative flex items-center h-[70px] gap-4">
+    <nav className="relative flex items-center h-[90px] px-4 md:px-10 gap-4">
 
       {/* Menu + Logo */}
       <div className="flex items-center gap-2 shrink-0">
@@ -34,7 +34,7 @@ export default function NavBar() {
       </div>
 
       {/* Search */}
-      <div className="flex-1 max-w-[400px]">
+      <div className="flex-1 max-w-[600px]">
         <NavSearch />
       </div>
 
@@ -50,7 +50,7 @@ export default function NavBar() {
 
       {/* Mobile Links */}
       {isOpen && (
-        <div className="absolute top-[70px] left-0 w-full bg-white dark:bg-[#071426] border-t dark:border-zinc-800 lg:hidden z-50">
+        <div className="absolute top-[90px] left-0 w-full bg-white dark:bg-[#071426] border-t dark:border-zinc-800 lg:hidden z-50">
           <div className="flex justify-center py-10">
             <NavLink />
           </div>
