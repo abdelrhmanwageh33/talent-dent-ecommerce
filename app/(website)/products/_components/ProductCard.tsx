@@ -9,9 +9,10 @@ type ProductCardProps = {
 
 export default function ProductCard({ product }: ProductCardProps) {
   return (
- <Link href={`/products/${product?.slug}`}>
+    <>
+    
     <div className="group relative flex flex-col overflow-hidden rounded-lg border border-gray-200 bg-white p-3 shadow-sm transition-shadow hover:shadow-md dark:border-gray-700 dark:bg-[#0B1B2A]">
-
+ <Link href={`/products/${product?.slug}`}>
       {/* Product Image */}
       <div className="relative flex h-52 items-center justify-center rounded-md bg-gray-50 dark:bg-gray-800">
         <Image
@@ -71,10 +72,15 @@ export default function ProductCard({ product }: ProductCardProps) {
         </div>
 
         {/* Add to cart */}
-              <AddToCartButton productId={product._id} />
+             
 
       </div>
+       </Link>
+        <AddToCartButton productId={product._id} />
     </div>
- </Link>
+
+ 
+    </>
+
   );
 }

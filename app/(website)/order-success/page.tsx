@@ -1,28 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import {
-  CheckCircle2,
-  Package,
-  Phone,
-  MapPin,
-} from "lucide-react";
-
-import { getUserOrder } from "@/services/orderService";
-import { getGuestId } from "@/lib/guestId";
-
-interface OrderProduct {
-  _id: string;
-  name: string;
-  slug: string;
-  image: string;
-  price: number;
-  stock: number;
-  active: boolean;
-}
+import { CheckCircle2, Package, Phone, MapPin } from "lucide-react";
 
 interface OrderItem {
-  product: OrderProduct;
+  _id: string;
+  product: string;
   name: string;
   image: string;
   price: number;
@@ -30,83 +13,44 @@ interface OrderItem {
 }
 
 interface Order {
-  _id: string;
   orderNumber: string;
-
   customer: {
     name: string;
     phone: string;
     address: string;
     notes?: string;
   };
-
   items: OrderItem[];
-
   totalPrice: number;
   status: string;
+  _id: string;
   createdAt: string;
-  updatedAt: string;
 }
 
 export default function OrderSuccessPage() {
   const [order, setOrder] = useState<Order | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
-
-  async function getOrder() {
-    try {
-      setLoading(true);
-
-      const res = await getUserOrder(getGuestId());
-
-      console.log("ORDER RESPONSE:", res);
-
-      setOrder(res.order);
-    } catch (error) {
-      console.error("Failed to get order:", error);
-      setError(true);
-    } finally {
-      setLoading(false);
-    }
-  }
 
   useEffect(() => {
-    getOrder();
+    const storedOrder = sessionStorage.getItem("lastOrder");
+
+    if (storedOrder) {
+      setOrder(JSON.parse(storedOrder));
+    }
   }, []);
 
-  // Loading
-  if (loading) {
+  if (!order) {
     return (
       <main className="flex min-h-[70vh] items-center justify-center">
-        <p className="text-sm text-gray-500 dark:text-gray-400">
-          Loading your order...
+        <p className="text-gray-500 dark:text-gray-400">
+          Order not found.
         </p>
-      </main>
-    );
-  }
-
-  // Error / no order
-  if (error || !order) {
-    return (
-      <main className="flex min-h-[70vh] items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-xl font-semibold text-[#06111F] dark:text-white">
-            Order not found
-          </h1>
-
-          <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
-            We couldn't find your order.
-          </p>
-        </div>
       </main>
     );
   }
 
   return (
     <main className="py-12">
-      {/* =========================
-          Success Header
-      ========================== */}
+      {/* Success Header */}
       <div className="mx-auto mb-10 max-w-3xl text-center">
         <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-[#047484]/10">
           <CheckCircle2
@@ -129,13 +73,8 @@ export default function OrderSuccessPage() {
         </div>
       </div>
 
-      {/* =========================
-          Main Content
-      ========================== */}
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_360px]">
-        {/* =========================
-            Products
-        ========================== */}
+        {/* Products */}
         <section className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-[#0a1929]">
           <div className="mb-6 flex items-center gap-3">
             <Package
@@ -156,9 +95,9 @@ export default function OrderSuccessPage() {
           </div>
 
           <div className="space-y-4">
-            {order?.items?.map((item) => (
+            {order.items.map((item) => (
               <div
-                key={item.product?._id}
+                key={item._id}
                 className="flex gap-4 rounded-xl border border-gray-100 p-3 dark:border-gray-800"
               >
                 {/* Image */}
@@ -170,7 +109,7 @@ export default function OrderSuccessPage() {
                   />
                 </div>
 
-                {/* Product Info */}
+                {/* Info */}
                 <div className="flex min-w-0 flex-1 flex-col justify-between">
                   <div>
                     <h3 className="line-clamp-2 text-sm font-medium text-[#06111F] dark:text-white">
@@ -191,20 +130,15 @@ export default function OrderSuccessPage() {
           </div>
         </section>
 
-        {/* =========================
-            Right Side
-        ========================== */}
+        {/* Customer + Summary */}
         <div className="space-y-6">
-          {/* =========================
-              Customer Information
-          ========================== */}
+          {/* Customer */}
           <section className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-[#0a1929]">
             <h2 className="mb-5 font-semibold text-[#06111F] dark:text-white">
               Delivery Information
             </h2>
 
             <div className="space-y-4">
-              {/* Name */}
               <div>
                 <p className="text-xs text-gray-400">
                   Customer
@@ -215,7 +149,6 @@ export default function OrderSuccessPage() {
                 </p>
               </div>
 
-              {/* Phone */}
               <div className="flex gap-3">
                 <Phone
                   size={18}
@@ -233,7 +166,6 @@ export default function OrderSuccessPage() {
                 </div>
               </div>
 
-              {/* Address */}
               <div className="flex gap-3">
                 <MapPin
                   size={18}
@@ -251,7 +183,6 @@ export default function OrderSuccessPage() {
                 </div>
               </div>
 
-              {/* Notes */}
               {order.customer.notes && (
                 <div className="rounded-lg bg-gray-50 p-3 dark:bg-[#06111F]">
                   <p className="text-xs text-gray-400">
@@ -266,16 +197,13 @@ export default function OrderSuccessPage() {
             </div>
           </section>
 
-          {/* =========================
-              Order Summary
-          ========================== */}
+          {/* Summary */}
           <section className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-[#0a1929]">
             <h2 className="mb-5 font-semibold text-[#06111F] dark:text-white">
               Order Summary
             </h2>
 
             <div className="space-y-4">
-              {/* Subtotal */}
               <div className="flex justify-between text-sm">
                 <span className="text-gray-500 dark:text-gray-400">
                   Subtotal
@@ -286,7 +214,6 @@ export default function OrderSuccessPage() {
                 </span>
               </div>
 
-              {/* Shipping */}
               <div className="flex justify-between text-sm">
                 <span className="text-gray-500 dark:text-gray-400">
                   Shipping
@@ -297,7 +224,6 @@ export default function OrderSuccessPage() {
                 </span>
               </div>
 
-              {/* Total */}
               <div className="border-t border-gray-200 pt-4 dark:border-gray-700">
                 <div className="flex justify-between">
                   <span className="font-semibold text-[#06111F] dark:text-white">

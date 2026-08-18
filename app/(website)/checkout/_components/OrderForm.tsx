@@ -47,6 +47,7 @@ async function onSubmit(data: z.infer<typeof orderSchema>) {
       "lastOrder",
       JSON.stringify(res.order)
     );
+localStorage.setItem("order_id", res.order._id);
     await deleteCart()
     dispatch(clearCart());
 
