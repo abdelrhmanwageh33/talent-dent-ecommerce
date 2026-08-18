@@ -1,4 +1,8 @@
-export function getGuestId() {
+export function getGuestId(): string {
+  if (typeof window === "undefined") {
+    return "";
+  }
+
   let guestId = localStorage.getItem("guestId");
 
   if (!guestId) {
