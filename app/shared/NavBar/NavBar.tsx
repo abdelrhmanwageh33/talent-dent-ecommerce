@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
-import { Menu, X } from "lucide-react";
+import React from "react";
 
 import NavLogo from "./_components/NavLogo";
 import NavSearch from "./_components/NavSearch";
@@ -9,27 +8,10 @@ import NavLink from "./_components/NavLink";
 import NavIcon from "./_components/NavIcon";
 
 export default function NavBar() {
-  const [isOpen, setIsOpen] = useState(false);
-
   return (
-    <nav className="relative flex items-center h-[90px] px-4 md:px-10 gap-4">
-
-      {/* Menu + Logo */}
-      <div className="flex items-center gap-2 shrink-0">
-
-        {/* Menu - Mobile */}
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="lg:hidden p-1"
-          aria-label="Toggle menu"
-        >
-          {isOpen ? (
-            <X className="w-6 h-6" />
-          ) : (
-            <Menu className="w-6 h-6" />
-          )}
-        </button>
-
+    <nav className="relative flex h-[90px] items-center gap-4">
+      {/* Logo */}
+      <div className="shrink-0">
         <NavLogo />
       </div>
 
@@ -39,7 +21,7 @@ export default function NavBar() {
       </div>
 
       {/* Desktop Links */}
-      <div className="hidden lg:flex flex-1 justify-center">
+      <div className="hidden flex-1 justify-center lg:flex">
         <NavLink />
       </div>
 
@@ -47,16 +29,6 @@ export default function NavBar() {
       <div className="shrink-0">
         <NavIcon />
       </div>
-
-      {/* Mobile Links */}
-      {isOpen && (
-        <div className="absolute top-[90px] left-0 w-full bg-white dark:bg-[#071426] border-t dark:border-zinc-800 lg:hidden z-50">
-          <div className="flex justify-center py-10">
-            <NavLink />
-          </div>
-        </div>
-      )}
-
     </nav>
   );
 }
